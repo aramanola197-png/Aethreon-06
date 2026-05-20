@@ -380,7 +380,7 @@ button { font-family: var(--geist); cursor: pointer; }
 
 .theme-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
 .theme-switch button {
-  background: transparent; border: 0; color: var(--text-dim); padding: 7px 14px;
+  background: transparent; border: 0; color: var(--text); padding: 7px 14px;
   font-family: var(--geist); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .theme-switch button.active { background: rgba(173,132,17,0.2); color: var(--text); }

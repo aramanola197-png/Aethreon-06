@@ -69,23 +69,17 @@
 
   // ─── Panels (close on outside click) ─────────────────────────────────
   const panels = {
-    'control-panel': document.getElementById('control-panel'),
-    'notif-panel': document.getElementById('notif-panel'),
-    'avatar-picker': document.getElementById('avatar-picker'),
-    'ai-terminal': document.getElementById('ai-terminal'),
-  };
+  'notif-panel': document.getElementById('notif-panel'),
+};
   const openers = {
-    'control-panel': document.getElementById('control-btn'),
-    'notif-panel': document.getElementById('notif-btn'),
-    'avatar-picker': document.getElementById('avatar-btn'),
-    'ai-terminal': document.getElementById('fab-ai'),
-  };
+  'notif-panel': document.getElementById('notif-btn'),
+  'ai-terminal': document.getElementById('fab-ai'),
+};
   function openPanel(id) {
     Object.entries(panels).forEach(([k, el]) => { if (el && k !== id) el.hidden = true; });
     const p = panels[id]; if (!p) return;
     p.hidden = false;
     if (id === 'notif-panel') renderNotifications();
-    if (id === 'ai-terminal') focusAi();
   }
   function closePanel(id) { const p = panels[id]; if (p) p.hidden = true; }
   Object.entries(openers).forEach(([id, btn]) => {
@@ -104,25 +98,8 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') Object.keys(panels).forEach(closePanel);
   });
-  document.getElementById('open-ai-from-control')?.addEventListener('click', () => { closePanel('control-panel'); openPanel('ai-terminal'); });
 
-  // ─── Avatar ──────────────────────────────────────────────────────────
-  const avatarGlyph = document.getElementById('avatar-glyph');
-  function applyAvatar() {
-    const g = localStorage.getItem(LS.avatar) || '◈';
-    if (avatarGlyph) avatarGlyph.textContent = g;
-  }
-  applyAvatar();
-  document.querySelectorAll('.avatar-tile').forEach(t => {
-    t.addEventListener('click', () => {
-      localStorage.setItem(LS.avatar, t.dataset.glyph);
-      applyAvatar();
-      closePanel('avatar-picker');
-      toast('Avatar updated.');
-    });
-  });
-
-  // ─── Notifications ──────────────────────────────────────────────────
+   // ─── Notifications ──────────────────────────────────────────────────
   const notifDot = document.getElementById('notif-dot');
   const notifList = document.getElementById('notif-list');
   async function pushNotif(tag, message) {
@@ -188,25 +165,7 @@
     aiLog.appendChild(div); aiLog.scrollTop = aiLog.scrollHeight;
   }
 
-  // ─── Control panel utilities ────────────────────────────────────────
-  document.querySelectorAll('[data-util]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const u = btn.dataset.util;
-      if (u === 'copy-client-id') {
-        try { await navigator.clipboard.writeText(CID); toast('Session ID copied.'); } catch { toast(CID); }
-      } else if (u === 'purge-cache') {
-        Object.keys(localStorage).forEach(k => { if (k.startsWith('aiq.last.')) localStorage.removeItem(k); });
-        toast('Local cache purged.');
-      } else if (u === 'api-status') {
-        try { const t0 = performance.now(); await fetch('/api/analytics').then(r => r.json()); toast(`Gateway operational · ${Math.round(performance.now() - t0)}ms`); }
-        catch { toast('Gateway unreachable.'); }
-      }
-    });
-  });
-
-  // ─── Settings UI ────────────────────────────────────────────────────
-  const cidLabel = document.getElementById('settings-cid');
-  if (cidLabel) cidLabel.textContent = CID;
+   // ─── Settings UI ────────────────────────────────────────────────────
   const animToggle = document.getElementById('anim-toggle');
   if (animToggle) {
     animToggle.checked = localStorage.getItem(LS.anim) !== '0';
@@ -236,7 +195,7 @@
     const N = Math.min(Math.floor((innerWidth * innerHeight) / 28000), 60);
     const dots = Array.from({ length: N }, () => ({
       x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.15 * dpr, vy: (Math.random() - 0.5) * 0.15 * dpr,
+      vx: (Math.random() - 0.5) * 0.35 * dpr, vy: (Math.random() - 0.5) * 0.35 * dpr,
       r: (Math.random() * 1.2 + 0.4) * dpr,
     }));
     function tick() {
