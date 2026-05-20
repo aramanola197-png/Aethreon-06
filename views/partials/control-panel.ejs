@@ -1,0 +1,24 @@
+<div id="control-panel" class="panel panel-right" role="dialog" aria-label="Control panel" hidden>
+  <div class="panel-head">
+    <span class="panel-title">Control</span>
+    <button class="panel-close icon-btn" data-close="control-panel" aria-label="Close">×</button>
+  </div>
+  <div class="panel-body">
+    <a href="/saved-searches" class="panel-row"><span class="row-icon">◈</span><span>Saved Searches</span></a>
+    <div class="panel-row toggle-row">
+      <span class="row-icon">☼</span>
+      <span>Theme</span>
+      <div class="theme-switch">
+        <button data-theme="light">Light</button>
+        <button data-theme="dark" class="active">Dark</button>
+        <button data-theme="system">System</button>
+      </div>
+    </div>
+    <button class="panel-row" id="open-ai-from-control"><span class="row-icon">⟁</span><span>AI Terminal Access</span></button>
+    <div class="panel-divider"></div>
+    <div class="panel-section-label">Advanced Utilities</div>
+    <button class="panel-row" data-util="copy-client-id"><span class="row-icon">◧</span><span>Copy Session ID</span></button>
+    <button class="panel-row" data-util="purge-cache"><span class="row-icon">◢</span><span>Purge Local Cache</span></button>
+    <button class="panel-row" data-util="api-status"><span class="row-icon">⌖</span><span>API Status Probe</span></button>
+  </div>
+</div>

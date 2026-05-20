@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: aethreon-iq
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ZAD_API_BASE
+        value: https://zeroauthoritydao.com/api
+      - key: MONGODB_URI
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true

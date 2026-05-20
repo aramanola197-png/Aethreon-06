@@ -1,0 +1,15 @@
+<section class="util-page" data-util="activity">
+  <div class="chip-rail" data-chips>
+    <% const sources = [['all','All'],['bounties','Bounties'],['gigs','Gigs'],['quests','Quests'],['grants','Grants'],['events','Events']]; %>
+    <% sources.forEach(function(s,i){ %>
+      <button class="chip <%= i===0 ? 'active' : '' %>" data-source="<%= s[0] %>"><%= s[1] %></button>
+    <% }) %>
+  </div>
+
+  <section class="instructions">
+    <h3>Live ecosystem activity</h3>
+    <p>Tap a source chip to load the latest items from the Zero Authority DAO API. Save any session to revisit it later. Export a snapshot card after a load completes.</p>
+  </section>
+
+  <section class="result" id="result" hidden></section>
+</section>

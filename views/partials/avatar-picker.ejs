@@ -1,0 +1,12 @@
+<div id="avatar-picker" class="panel panel-center" role="dialog" aria-label="Select avatar" hidden>
+  <div class="panel-head">
+    <span class="panel-title">Select Avatar</span>
+    <button class="panel-close icon-btn" data-close="avatar-picker" aria-label="Close">×</button>
+  </div>
+  <div class="panel-body avatar-grid">
+    <% const avatars = ['◈','⌬','⟁','⌖','◧','◢','✦','❖','▣','⬢','⌘','⟢','◉','✧','▰','✺']; %>
+    <% avatars.forEach(function(g){ %>
+      <button class="avatar-tile" data-glyph="<%= g %>"><%= g %></button>
+    <% }) %>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-head">
+    <img src="/images/logo-brandname.jpg" alt="" class="sidebar-logo" />
+    <span class="sidebar-brand">AETHREON IQ</span>
+  </div>
+  <nav class="sidebar-nav">
+    <% const nav = [
+      ['/', 'Home', 'home'],
+      ['/wallet-intelligence', 'Wallet Intelligence', 'wallet'],
+      ['/reputation', 'Reputation', 'shield'],
+      ['/compare-wallets', 'Compare Wallets', 'compare'],
+      ['/activity', 'Activity', 'pulse'],
+      ['/analytics', 'Analytics', 'chart'],
+      ['/discover', 'Discover', 'compass'],
+      ['/saved-searches', 'Saved Searches', 'bookmark'],
+      ['/settings', 'Settings', 'gear'],
+    ]; %>
+    <% nav.forEach(function(item){ %>
+      <a href="<%= item[0] %>" class="nav-item <%= path === item[0] ? 'active' : '' %>" data-icon="<%= item[2] %>">
+        <span class="nav-icon"><%- include('icons/' + item[2]) %></span>
+        <span class="nav-label"><%= item[1] %></span>
+      </a>
+    <% }) %>
+  </nav>
+  <div class="sidebar-foot">
+    <span class="tag-dot"></span>
+    <span class="status-text">Operational · Zero Authority API</span>
+  </div>
+</aside>
+<div id="sidebar-scrim" class="scrim" aria-hidden="true"></div>

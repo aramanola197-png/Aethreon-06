@@ -1,0 +1,47 @@
+<section class="hero">
+  <span class="eyebrow">Web3 Intelligence Layer</span>
+  <h2 class="hero-title">Reputation isn't a number. It's <em>signal</em>.</h2>
+  <p class="hero-sub">AETHREON IQ reads contributor activity across the Zero Authority DAO ecosystem and resolves it into a single, exportable intelligence profile — bounties, gigs, quests, grants, governance and credibility, fused.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="/wallet-intelligence">Run Wallet Intelligence <span class="btn-caret">→</span></a>
+    <a class="btn btn-ghost" href="/analytics">View Live Analytics</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="problem">
+  <h3 class="section-title">The Web3 reputation problem</h3>
+  <p class="section-body">Identity in Web3 is fragmented — wallets carry transactions, not stories. Hiring, granting, voting and trusting all happen against opaque addresses. AETHREON IQ closes that gap: it ingests verifiable contributor data from the Zero Authority DAO and produces operational signal you can act on.</p>
+</section>
+
+<div class="divider"></div>
+
+<section class="utilities">
+  <h3 class="section-title">Core utilities</h3>
+  <div class="util-grid">
+    <% const utils = [
+      { href: '/wallet-intelligence', name: 'Wallet Intelligence', body: 'Resolve any STX address into a contributor dossier — activity sources, tier, signals, derived tags.' },
+      { href: '/reputation', name: 'Reputation', body: 'Run the AETHREON scoring engine. 0–1000 across Contribution, Governance, Consistency, Credibility, Economic.' },
+      { href: '/compare-wallets', name: 'Compare Wallets', body: 'Place two contributors side-by-side. Spot edge differences instantly across every axis.' },
+      { href: '/activity', name: 'Activity', body: 'Live feed of bounties, gigs, quests, grants and events. Filter by source. Refresh on demand.' },
+      { href: '/analytics', name: 'Analytics', body: 'Ecosystem-wide signal: contributors, gigs in motion, SIPs in flight, quest velocity.' },
+      { href: '/discover', name: 'Discover', body: 'Surface active contributors. One click opens a full intelligence run.' },
+    ]; %>
+    <% utils.forEach(function(u){ %>
+      <article class="util-card">
+        <h4 class="util-name"><%= u.name %></h4>
+        <p class="util-body"><%= u.body %></p>
+        <a class="btn btn-go" href="<%= u.href %>">Go <span class="btn-caret">→</span></a>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="meta-row">
+  <div><span class="meta-k">API</span><span class="meta-v">Zero Authority DAO · live</span></div>
+  <div><span class="meta-k">Engine</span><span class="meta-v">AETHREON scoring v1</span></div>
+  <div><span class="meta-k">Mode</span><span class="meta-v">Operational</span></div>
+</section>
