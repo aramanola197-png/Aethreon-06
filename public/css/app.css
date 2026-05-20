@@ -189,8 +189,8 @@ button {
 }
 
 .sidebar-logo {
-  width: 28px;
-  height: 28px;
+  width: 42px;
+  height: 42px;
 
   border-radius: 6px;
 
@@ -367,8 +367,8 @@ button {
 }
 
 .topbar-logo {
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  height: 36px;
 
   border-radius: 6px;
 
@@ -542,8 +542,8 @@ button {
 }
 
 .footer-logo {
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 26px;
 
   border-radius: 4px;
 }
@@ -610,14 +610,34 @@ button {
 
 /* ───────────────────────── LIGHT THEME BUTTON FIXES ───────────────────────── */
 
-[[data-theme="light"] .btn-primary {
+[data-theme="light"] .btn-primary {
   color: #ffffff;
 }
 
 [data-theme="light"] .ctrl-btn,
-[data-theme="light"] .theme-switch button.active,
-[data-theme="light"] .theme-btn.active {
+[data-theme="light"] .nav-item.active {
   color: #192547;
+}
+
+[data-theme="light"] .theme-switch-button.active,
+[data-theme="light"] .theme-btn.active {
+  background: #192547;
+  color: #FFEDBD;
+  border-color: #192547;
+}
+/* Export quality active state */
+.export-switch button.active {
+  background: linear-gradient(
+    180deg,
+    var(--accent-2),
+    var(--accent)
+  );
+
+  color: #192547;
+  border-color: transparent;
+
+  box-shadow:
+    0 0 18px rgba(255, 196, 0, 0.18);
 }
 /* ───────────────────────── HERO ───────────────────────── */
 
@@ -1549,7 +1569,7 @@ button {
   overflow: hidden;
 }
 
-.theme-switch button {
+.theme-switch-button {
   background: transparent;
 
   border: 0;
@@ -1567,7 +1587,7 @@ button {
   text-transform: uppercase;
 }
 
-.theme-switch button.active {
+.theme-switch-button.active {
   background: rgba(173,132,17,0.2);
 
   color: var(--text);

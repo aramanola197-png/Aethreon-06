@@ -229,7 +229,28 @@
     notifToggle.checked = localStorage.getItem(LS.notif) !== '0';
     notifToggle.addEventListener('change', () => localStorage.setItem(LS.notif, notifToggle.checked ? '1' : '0'));
   }
+// Export quality switch
+const exportButtons = document.querySelectorAll('.export-switch button');
 
+if (exportButtons.length) {
+  const savedExport = localStorage.getItem('aethreon.export') || 'standard';
+
+  exportButtons.forEach(btn => {
+    if (btn.dataset.export === savedExport) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+
+    btn.addEventListener('click', () => {
+      exportButtons.forEach(b => b.classList.remove('active'));
+
+      btn.classList.add('active');
+
+      localStorage.setItem('aethreon.export', btn.dataset.export);
+    });
+  });
+}
   // ─── Background particles ───────────────────────────────────────────
   const canvas = document.getElementById('bg-particles');
   let particleAnim;
