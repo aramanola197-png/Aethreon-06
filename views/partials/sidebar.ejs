@@ -17,7 +17,7 @@
     ]; %>
     <% nav.forEach(function(item){ %>
       <a href="<%= item[0] %>" class="nav-item <%= path === item[0] ? 'active' : '' %>" data-icon="<%= item[2] %>">
-        <span class="nav-icon"><%- include('icons/' + item[2]) %></span>
+        <span class="nav-icon"><%- include('../icons/' + item[2]) %></span>
         <span class="nav-label"><%= item[1] %></span>
       </a>
     <% }) %>
