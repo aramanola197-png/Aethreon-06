@@ -147,15 +147,65 @@
     tick();
   }
   aiForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const q = aiInput.value.trim(); if (!q) return;
-    aiInput.value = '';
-    appendAi('user', q);
-    try {
-      const { reply } = await api('/api/ai', { method: 'POST', body: JSON.stringify({ question: q }) });
-      appendAi('bot', reply);
-    } catch (err) { appendAi('bot', err.message); }
-  });
+  e.preventDefault();
+
+  const q = aiInput.value.trim();
+  if (!q) return;
+
+  aiInput.value = '';
+
+  appendAi('user', q);
+
+  // ─── Smart greetings ─────────────────────────────
+  const msg = q.toLowerCase();
+
+  const greetings = [
+    'hi',
+    'hello',
+    'hey',
+    'yo',
+    'sup',
+    'good morning',
+    'good afternoon',
+    'good evening'
+  ];
+
+  if (greetings.includes(msg)) {
+
+    const replies = [
+      'Hello 👋 How can I assist you today?',
+      'Hey there ⚡ What would you like to do?',
+      'Hi 👋 Need help with wallet intelligence or analytics?',
+      'Welcome back to AETHREON IQ.'
+    ];
+
+    const randomReply =
+      replies[Math.floor(Math.random() * replies.length)];
+
+    setTimeout(() => {
+      appendAi('bot', randomReply);
+    }, 350);
+
+    return;
+  }
+
+  // ─── API AI response ─────────────────────────────
+  try {
+
+    const { reply } = await api('/api/ai', {
+      method: 'POST',
+      body: JSON.stringify({ question: q })
+    });
+
+    appendAi('bot', reply);
+
+  } catch (err) {
+
+    appendAi('bot', err.message);
+
+  }
+
+});
   function appendAi(role, text) {
     if (!aiLog) return;
     const div = document.createElement('div');

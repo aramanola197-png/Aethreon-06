@@ -1,34 +1,42 @@
 <div id="control-panel" class="panel panel-right" role="dialog" aria-label="Control panel" hidden>
+
   <div class="panel-head">
     <span class="panel-title">Control</span>
-    <button class="panel-close icon-btn" data-close="control-panel" aria-label="Close">×</button>
+
+    <button
+      class="panel-close icon-btn"
+      data-close="control-panel"
+      aria-label="Close">
+      ×
+    </button>
   </div>
+
   <div class="panel-body">
-    <a href="/saved-searches" class="panel-row"><span class="row-icon">◈</span><span>Saved Searches</span></a>
+
+    <!-- Saved Searches -->
+    <a href="/saved-searches" class="panel-row">
+      <span class="row-icon">◈</span>
+      <span>Saved Searches</span>
+    </a>
+
+    <!-- Theme -->
     <div class="panel-row toggle-row">
       <span class="row-icon">☼</span>
+
       <span>Theme</span>
+
       <div class="theme-switch">
         <button data-theme="light">Light</button>
-        <button data-theme="dark" class="active">Dark</button>
-        <button data-theme="system">System</button>
+
+        <button data-theme="dark" class="active">
+          Dark
+        </button>
+
+        <button data-theme="system">
+          System
+        </button>
       </div>
     </div>
-    <div class="panel-section-label">Workspace Utilities</div>
 
-<button class="panel-row">
-   <span class="row-icon">◈</span>
-   <span>Export Quality</span>
-</button>
-
-<button class="panel-row">
-   <span class="row-icon">◈</span>
-   <span>Auto Save Searches</span>
-</button>
-
-<button class="panel-row">
-   <span class="row-icon">◈</span>
-   <span>Workspace Preferences</span>
-</button>
   </div>
 </div>
