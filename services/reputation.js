@@ -11,28 +11,126 @@ function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 function deriveSignals(user) {
   if (!user) return null;
   const stats = user.stats || user.userStats || {};
-  return {
-    bounties: num(stats.bountiesCompleted ?? stats.completedBounties ?? user.bountiesCount),
-    gigs: num(stats.gigsCompleted ?? user.gigsCount),
-    quests: num(stats.questsCompleted ?? user.questsCount),
-    grants: num(stats.grantsReceived ?? user.grantsCount),
-    events: num(stats.eventsAttended ?? user.eventsCount),
-    reviews: num(stats.reviewsCount ?? user.reviewsCount),
-    rating: num(stats.averageRating ?? user.rating, 0),
-    earnings: num(stats.totalEarnings ?? user.totalEarnings),
-    daysActive: num(stats.daysActive ?? user.daysActive),
-  };
+ return {
+  bounties: num(
+  (user.bountyStats?.totalSubmissions || 0) +
+  (user.bountyStats?.totalCreated || 0)
+),
+
+  gigs: num(
+    stats.gigsCompleted ??
+    user.takenGigs?.length
+  ),
+
+  quests: num(
+    stats.questsCompleted ??
+    user.bountySubmissions?.length
+  ),
+
+  grants: num(
+    stats.grantsReceived ??
+    user.createdBounties?.length
+  ),
+
+  events: num(
+    stats.eventsAttended ??
+    user.createdBounties?.length
+  ),
+
+  reviews: num(
+  stats.reviewCount ??
+  user._count?.comments ??
+  user.reactions?.length ??
+  0
+),
+
+rating: num(
+  stats.averageRating ??
+  user.rating ??
+  Math.min(
+    5,
+    (
+      ((user.bountySubmissions?.length || 0) * 0.15) +
+      ((user.wonBounties?.length || 0) * 1.2) +
+      ((user.takenGigs?.length || 0) * 0.7) +
+      ((user._count?.comments || 0) * 0.2)
+    )
+  ) ??
+  0
+),
+  earnings: num(
+    stats.totalEarnings ??
+    user.totalEarnings ??
+    (
+      (user.wonBounties?.length || 0) * 50 +
+      (user.takenGigs?.length || 0) * 100
+    )
+  ),
+
+  daysActive: num(
+  stats.daysActive ??
+  (
+    user.bountySubmissions?.length ||
+    user.takenGigs?.length
+      ? Math.max(
+          1,
+          Math.floor(
+            (
+              new Date() -
+              new Date(
+                user.bountySubmissions?.[0]?.createdAt ||
+                user.createdAt
+              )
+            ) / (1000 * 60 * 60 * 24)
+          )
+        )
+      : 0
+  )
+),
+};
 }
 
 function computeScore(signals) {
   if (!signals) return { score: 0, tier: 'UNRANKED', breakdown: {} };
   const breakdown = {
-    contribution: clamp(signals.bounties * 6 + signals.gigs * 5 + signals.quests * 4, 0, 300),
-    governance: clamp(signals.grants * 12 + signals.events * 3, 0, 180),
-    consistency: clamp(signals.daysActive * 0.4, 0, 160),
-    credibility: clamp(signals.reviews * 2 + signals.rating * 20, 0, 220),
-    economic: clamp(Math.log10(signals.earnings + 1) * 35, 0, 140),
-  };
+  contribution: clamp(
+    signals.bounties * 6 +
+    signals.gigs * 5 +
+    signals.quests * 4,
+    0,
+    200
+  ),
+
+  governance: clamp(
+    signals.grants * 12 +
+    signals.events * 3,
+    0,
+    200
+  ),
+
+  consistency: clamp(
+    signals.daysActive * 0.4,
+    0,
+    200
+  ),
+
+  credibility: clamp(
+    (
+      signals.reviews * 6 +
+      signals.rating * 30 +
+      signals.bounties * 4 +
+      signals.gigs * 8
+    ),
+    0,
+    200
+  ),
+
+  economic: clamp(
+    Math.log10(signals.earnings + 1) * 35,
+    0,
+    200
+  )
+};
   const raw = Object.values(breakdown).reduce((a, b) => a + b, 0);
   const score = Math.round(clamp(raw, 0, 1000));
   const tier = tierOf(score);

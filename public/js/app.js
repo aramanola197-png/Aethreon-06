@@ -20,7 +20,11 @@
     const headers = Object.assign({ 'x-client-id': CID, 'Content-Type': 'application/json' }, opts.headers || {});
     const res = await fetch(path, Object.assign({}, opts, { headers }));
     const data = await res.json().catch(() => ({ ok: false, message: 'Invalid response' }));
-    if (!res.ok || data.ok === false) throw new Error(data.message || `HTTP ${res.status}`);
+    if (!res.ok || data.ok === false) {
+  throw new Error(
+    'AETHREON could not locate this STX address.'
+  );
+}
     return data;
   }
 
@@ -451,11 +455,11 @@ if (exportButtons.length) {
 
   function profileCard(profile, address, util, embedded) {
     const u = profile.user || {};
-    const name = u.displayName || u.name || u.username || u.handle || (address?.slice(0, 8) + '…');
+    const name = u.displayName || u.name || u.username || profile.displayName || 'Unknown Contributor';
     const tags = (profile.tags || []).map(t => `<span class="tag">${escape(t)}</span>`).join('');
     const sig = profile.signals || {};
     const br = profile.breakdown || {};
-    const max = { contribution: 300, governance: 180, consistency: 160, credibility: 220, economic: 140 };
+    const max = { contribution: 200, governance: 200, consistency: 200, credibility: 200, economic: 200 };
     const bar = (k) => `
       <div class="bar-row">
         <span class="bar-k">${escape(k)}</span>
@@ -499,7 +503,7 @@ if (exportButtons.length) {
         <div class="activity-list">
           ${(r.items || []).slice(0, 8).map(i => `
             <div class="activity-item">
-              <h5>${escape(i.title || i.name || i.slug || 'Untitled')}</h5>
+              <h5>${escape(i.title || i.name || i.slug || (i.category ? i.category + ' Item' : 'Grant Activity'))}</h5>
               ${i.description ? `<p>${escape(String(i.description).slice(0, 160))}</p>` : ''}
               <span class="activity-meta">${escape(i.status || i.category || i.organization?.name || '')}</span>
             </div>`).join('') || '<div class="empty-state">No items</div>'}
@@ -644,11 +648,20 @@ if (exportButtons.length) {
     ctx.fillText(util === 'reputation' ? 'REPUTATION DOSSIER' : 'WALLET INTELLIGENCE', 56, 200);
     ctx.font = '14px "Ubuntu Mono", monospace';
     ctx.fillStyle = 'rgba(255,237,189,0.6)';
-    ctx.fillText(addr, 56, 230);
+
+const displayName =
+  p.user?.displayName ||
+  p.user?.name ||
+  p.user?.username ||
+  p.displayName ||
+  'Unknown Contributor';
+
+ctx.fillText(displayName, 56, 230);
+ctx.fillText(addr, 56, 260);
     // score block right
     ctx.textAlign = 'right';
     ctx.fillStyle = '#AD8411'; ctx.font = '700 140px Ubuntu, sans-serif';
-    ctx.fillText(String(p.score), 1140, 230);
+    ctx.fillText(String(p.score), 1140, 260);
     ctx.fillStyle = '#FFEDBD'; ctx.font = '14px "Ubuntu Mono", monospace';
     ctx.fillText(`TIER · ${p.tier}`, 1140, 260);
     ctx.textAlign = 'left';
@@ -670,9 +683,16 @@ if (exportButtons.length) {
     ctx.fillStyle = '#FFEDBD'; ctx.font = '700 48px Geist, sans-serif';
     ctx.fillText('COMPARE · WALLETS', 56, 200);
     const drawSide = (p, x, addr) => {
+      const displayName =
+  p.user?.displayName ||
+  p.user?.name ||
+  p.user?.username ||
+  p.displayName ||
+  'Unknown Contributor';
       ctx.fillStyle = '#FFEDBD'; ctx.font = '14px "Ubuntu Mono", monospace';
       ctx.fillText(addr.slice(0, 24) + (addr.length > 24 ? '…' : ''), x, 240);
       ctx.fillStyle = '#AD8411'; ctx.font = '700 110px Ubuntu, sans-serif';
+      ctx.fillText(displayName, x, 320);
       ctx.fillText(String(p.score), x, 360);
       ctx.fillStyle = '#FFEDBD'; ctx.font = '14px "Ubuntu Mono", monospace';
       ctx.fillText(`TIER · ${p.tier}`, x, 390);
@@ -700,7 +720,7 @@ if (exportButtons.length) {
       y += 26;
       (r.items || []).slice(0, 3).forEach(i => {
         ctx.fillStyle = '#FFEDBD'; ctx.font = '16px Geist, sans-serif';
-        const title = (i.title || i.name || i.slug || 'Untitled').slice(0, 70);
+        const title = (i.title || i.name || i.slug || (i.category ? i.category + ' Item' : 'Grant Activity')).slice(0, 70);
         ctx.fillText('· ' + title, 80, y); y += 24;
       });
       y += 12;
