@@ -47,6 +47,7 @@
     let final = t;
     if (t === 'system') final = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', final);
+    document.body.setAttribute('data-theme', final);
     document.querySelectorAll('[data-theme]').forEach(el => {
       el.classList && el.classList.remove('active');
     });

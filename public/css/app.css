@@ -32,18 +32,28 @@
 /* ───────────────────────── LIGHT THEME ───────────────────────── */
 
 [data-theme="light"] {
-  --bg: #f4ecd6;
-  --bg-2: #ece2c2;
-  --bg-3: #ddd1ad;
 
-  --text: #1a2447;
-  --text-dim: rgba(26,36,71,0.7);
-  --text-mute: rgba(26,36,71,0.5);
+  --bg: #f6f3ea;
+  --bg-2: #ece6d7;
+  --bg-3: #ddd3bd;
 
-  --line: rgba(173,132,17,0.42);
-  --line-soft: rgba(26,36,71,0.1);
+  --text: #1b2440;
+  --text-dim: rgba(27,36,64,0.72);
+  --text-mute: rgba(27,36,64,0.55);
 
-  --panel-bg: rgba(244,236,214,0.92);
+  --line: rgba(181,145,31,0.28);
+  --line-soft: rgba(27,36,64,0.08);
+
+  --panel-bg: rgba(255,255,255,0.72);
+
+  --accent: #c89b1f;
+  --accent-2: #8b6a10;
+
+  --card-shadow: 0 10px 30px rgba(27,36,64,0.08);
+
+  --glass: rgba(255,255,255,0.55);
+
+  --panel-border: rgba(181,145,31,0.18);
 }
 
 /* ───────────────────────── RESET ───────────────────────── */
@@ -65,7 +75,17 @@ html {
 
 body {
   font-family: var(--mont);
-  background: var(--bg);
+  background:
+radial-gradient(
+circle at top,
+rgba(200,155,31,0.08),
+transparent 42%
+),
+linear-gradient(
+180deg,
+var(--bg),
+var(--bg-2)
+);
   color: var(--text);
 
   -webkit-font-smoothing: antialiased;
@@ -610,21 +630,7 @@ button {
 
 /* ───────────────────────── LIGHT THEME BUTTON FIXES ───────────────────────── */
 
-[data-theme="light"] .btn-primary {
-  color: #ffffff;
-}
 
-[data-theme="light"] .ctrl-btn,
-[data-theme="light"] .nav-item.active {
-  color: #192547;
-}
-
-[data-theme="light"] .theme-switch-button.active,
-[data-theme="light"] .theme-btn.active {
-  background: #192547;
-  color: #FFEDBD;
-  border-color: #192547;
-}
 /* Export quality active state */
 .export-switch button.active {
   background: linear-gradient(
@@ -744,6 +750,7 @@ button {
 }
 
 .util-card {
+
   position: relative;
 
   padding: 20px;
@@ -756,6 +763,8 @@ button {
     rgba(255,237,189,0.015)
   );
 
+  backdrop-filter: blur(10px);
+
   border: 1px solid var(--line-soft);
 
   transition:
@@ -764,6 +773,7 @@ button {
     background .2s;
 
   display: flex;
+
   flex-direction: column;
 
   gap: 10px;
@@ -1051,11 +1061,7 @@ button {
 
   border-radius: var(--radius);
 
-  background: linear-gradient(
-    180deg,
-    rgba(255,237,189,0.04),
-    rgba(255,237,189,0.01)
-  );
+  background: var(--panel-bg);
 
   animation: fade-in .4s ease both;
 }
@@ -1530,11 +1536,17 @@ button {
 .setting-card {
   padding: 18px;
 
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--panel-border);
 
   border-radius: var(--radius);
 
-  background: rgba(255,237,189,0.02);
+  background: var(--glass);
+  
+  background: var(--panel-bg);
+
+  box-shadow: var(--card-shadow);
+
+  backdrop-filter: blur(12px);
 }
 
 .setting-card h3 {
@@ -1570,27 +1582,31 @@ button {
 }
 
 .theme-switch-button {
-  background: transparent;
 
-  border: 0;
+  background: rgba(255,255,255,0.75);
 
   color: var(--text);
 
-  padding: 7px 14px;
+  border: 1px solid var(--panel-border);
 
-  font-family: var(--geist);
+  border-radius: 10px;
 
-  font-size: 12px;
+  padding: 8px 14px;
 
-  letter-spacing: 0.06em;
+  transition: 0.25s ease;
 
-  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .theme-switch-button.active {
-  background: rgba(173,132,17,0.2);
 
-  color: var(--text);
+  background: var(--accent);
+
+  color: #111;
+
+  border-color: transparent;
+
+  box-shadow: 0 4px 14px rgba(200,155,31,0.25);
 }
 
 .switch {
@@ -1924,7 +1940,7 @@ button {
 
   border-radius: 10px;
 
-  background: rgba(255,237,189,0.04);
+  background: var(--glass);
 
   color: var(--text);
 
@@ -1936,7 +1952,7 @@ button {
 }
 
 .avatar-tile:hover {
-  background: rgba(173,132,17,0.18);
+  background: rgba(200,155,31,0.12);
 
   border-color: var(--line);
 
@@ -2149,28 +2165,3 @@ button {
 
 /* ───────────────────────── LIGHT THEME TWEAKS ───────────────────────── */
 
-[data-theme="light"] .topbar {
-  background: linear-gradient(
-    180deg,
-    rgba(244,236,214,0.92),
-    rgba(244,236,214,0.6)
-  );
-}
-
-[data-theme="light"] .signal,
-[data-theme="light"] .util-card,
-[data-theme="light"] .stat-tile,
-[data-theme="light"] .activity-item,
-[data-theme="light"] .contrib-card {
-  background: rgba(26,36,71,0.04);
-}
-
-[data-theme="light"] .search-bar {
-  background: rgba(26,36,71,0.04);
-}
-
-[data-theme="light"] .tag {
-  background: rgba(173,132,17,0.18);
-
-  color: #5c4408;
-}

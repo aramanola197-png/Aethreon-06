@@ -44,6 +44,7 @@
 
   <!-- Main CSS -->
   <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="/assets/auth/auth.css" />
 </head>
 
 <body data-page="<%= pageTitle %>">
@@ -51,14 +52,16 @@
   <!-- PARTICLE BACKGROUND -->
   <canvas id="bg-particles" aria-hidden="true"></canvas>
 
-  <!-- SIDEBAR -->
+  <% if (locals.user) { %>
   <%- include('partials/sidebar') %>
+<% } %>
 
   <!-- APP SHELL -->
   <div class="shell">
 
-    <!-- TOPBAR -->
-    <%- include('partials/topbar') %>
+    <% if (locals.user) { %>
+  <%- include('partials/topbar') %>
+<% } %>
 
     <!-- PAGE -->
     <main class="page">
@@ -70,12 +73,11 @@
 
   </div>
 
+  <% if (user) { %>
+
   <!-- PANELS -->
   <%- include('partials/control-panel') %>
   <%- include('partials/notifications') %>
-
-  <!-- REMOVED AVATAR PICKER -->
-  <!-- <%- include('partials/avatar-picker') %> -->
 
   <!-- AI TERMINAL -->
   <%- include('partials/ai-terminal') %>
@@ -101,6 +103,8 @@
       />
     </svg>
   </button>
+
+<% } %> 
 
   <!-- GLOBAL SCRIPT -->
   <script src="/js/app.js" defer></script>

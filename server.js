@@ -1,14 +1,32 @@
+
+process.on('uncaughtException', err => {
+  console.error(err);
+});
+
+process.on('unhandledRejection', err => {
+  console.error(err);
+});
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo').default;
+const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
 
 const indexRoutes = require('./routes/index');
 const apiRoutes = require('./routes/api');
+const authRoutes = require('./routes/auth');
+require('./config/passport');
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
+
+app.use(express.static('public'));
 const PORT = process.env.PORT || 3000;
 
 // View engine
@@ -19,6 +37,20 @@ app.set('layout', 'layout');
 
 // Middleware
 app.use(compression());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'aethreon-secret',
+    resave: false,
+    saveUninitialized: false,
+    store: undefined,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '7d' }));
@@ -32,12 +64,18 @@ app.use((req, res, next) => {
   res.locals.path = req.path;
   res.locals.title = 'AETHREON IQ';
   res.locals.pageTitle = '';
+  res.locals.user = req.user || null;
   next();
 });
 
 // Routes
 app.use('/', indexRoutes);
+app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
+
+app.get('/home', (req, res) => {
+  res.redirect('/');
+});
 
 // 404
 app.use((req, res) => {
