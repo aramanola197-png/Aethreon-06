@@ -104,6 +104,14 @@ body {
 
 }
 
+.gateway-logo{
+    width: 160px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 1.2rem;
+    display: block;
+}
+
 .gateway-badge {
 
   display: inline-flex;
@@ -213,25 +221,29 @@ body {
 
 }
 
-.auth-secondary-btn {
+.auth-secondary-btn{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #ffffff;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
-  border:
-    1px solid rgba(255,255,255,0.14);
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color:
-    white;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.auth-secondary-btn:hover {
+.auth-secondary-btn:hover{
+    background: rgba(212,170,74,0.12);
+    border-color: rgba(212,170,74,0.45);
 
-  background:
-    rgba(255,255,255,0.08);
+    box-shadow:
+        0 0 18px rgba(212,170,74,0.18);
 
+    transform: translateY(-2px);
 }
-
 .gateway-footer {
 
   display: flex;
