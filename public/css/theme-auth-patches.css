@@ -1,0 +1,30 @@
+/* AUTH / THEME STABILIZATION PATCH */
+
+.logout-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:46px;
+  padding:0 18px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(173,132,17,.20);
+  color:#FFEDBD;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-decoration:none;
+}
+
+.logout-btn:hover{
+  background:rgba(173,132,17,.12);
+}
+
+.quality-btn.active,
+.switch input:checked + span{
+  background:linear-gradient(135deg,#AD8411,#d5a52c)!important;
+}
+
+html[data-theme="light"] body,
+body[data-theme="light"]{
+  color:#192547!important;
+}
