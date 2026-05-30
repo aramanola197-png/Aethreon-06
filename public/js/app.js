@@ -41,27 +41,6 @@
     toastT = setTimeout(() => { toastEl.classList.remove('show'); setTimeout(() => toastEl.hidden = true, 320); }, 3200);
   }
 
-  // ─── Theme ───────────────────────────────────────────────────────────
-  function applyTheme(theme) {
-    const t = theme || localStorage.getItem(LS.theme) || 'dark';
-    let final = t;
-    if (t === 'system') final = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', final);
-    document.body.setAttribute('data-theme', final);
-    document.querySelectorAll('[data-theme]').forEach(el => {
-      el.classList && el.classList.remove('active');
-    });
-    document.querySelectorAll('.theme-switch button').forEach(b => {
-      b.classList.toggle('active', b.dataset.theme === t);
-    });
-    localStorage.setItem(LS.theme, t);
-  }
-  applyTheme();
-  document.addEventListener('click', (e) => {
-    const b = e.target.closest('.theme-switch button[data-theme]');
-    if (b) applyTheme(b.dataset.theme);
-  });
-
   // ─── Sidebar (mobile) ────────────────────────────────────────────────
   const sidebar = document.getElementById('sidebar');
   const scrim = document.getElementById('sidebar-scrim');
@@ -160,6 +139,45 @@
   aiInput.value = '';
 
   appendAi('user', q);
+
+  //--Control panel,AI TERMINAL --
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("AETHREON IQ Script Loaded Successfully.");
+
+    // 1. CONTROL PANEL TOGGLE
+    const controlBtn = document.getElementById('control-btn') || document.querySelector('.ctrl-btn');
+    const controlPanel = document.getElementById('control-panel') || document.querySelector('.control-panel') || document.querySelector('.panel-right');
+
+    if (controlBtn && controlPanel) {
+        console.log("Control elements found. Binding click event.");
+        controlBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            controlPanel.classList.toggle('active');
+            console.log("Control panel toggled.");
+        });
+    } else {
+        console.warn("Control elements missing:", { controlBtn: !!controlBtn, controlPanel: !!controlPanel });
+    }
+
+    // 2. FLOATING AI BUTTON TOGGLE
+    const fabAi = document.getElementById('fab-ai') || document.querySelector('.fab');
+    const aiTerminal = document.getElementById('ai-terminal') || document.querySelector('.ai-terminal-container') || document.querySelector('.ai-terminal');
+
+    if (fabAi && aiTerminal) {
+        console.log("AI Terminal elements found. Binding click event.");
+        fabAi.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            aiTerminal.classList.toggle('open');
+            console.log("AI Terminal toggled.");
+        });
+    } else {
+        console.warn("AI Terminal elements missing:", { fabAi: !!fabAi, aiTerminal: !!aiTerminal });
+    }
+});
+
 
   // ─── Smart greetings ─────────────────────────────
   const msg = q.toLowerCase();
