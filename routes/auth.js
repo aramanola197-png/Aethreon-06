@@ -53,4 +53,81 @@ router.get('/logout', (req, res) => {
   });
 });
 
+router.post('/signup', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.render('auth/signup', {
+        error: 'Account already exists'
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword
+    });
+
+    req.login(user, (err) => {
+      if (err) {
+        return res.redirect('/auth/login');
+      }
+
+      return res.redirect('/');
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.redirect('/auth/signup');
+  }
+});
+
+
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.render('auth/login', {
+        error: 'Account not found'
+      });
+    }
+
+    const validPassword = await bcrypt.compare(
+      password,
+      user.password
+    );
+
+    if (!validPassword) {
+      return res.render('auth/login', {
+        error: 'Invalid password'
+      });
+    }
+
+    req.login(user, (err) => {
+      if (err) {
+        return res.render('auth/login', {
+          error: 'Login failed'
+        });
+      }
+
+      return res.redirect('/');
+    });
+
+  } catch (err) {
+    console.error(err);
+
+    return res.render('auth/login', {
+      error: 'Login failed'
+    });
+  }
+});
+
 module.exports = router;
