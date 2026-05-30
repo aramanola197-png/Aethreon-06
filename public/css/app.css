@@ -29,32 +29,25 @@
   --mono:      'Ubuntu Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 }
 
-/* ───────────────────────── LIGHT THEME ───────────────────────── */
+/* ───────────────────────── BG Blocking Fix───────────────────────── */
 
-[data-theme="light"] {
-
-  --bg: #f6f3ea;
-  --bg-2: #ece6d7;
-  --bg-3: #ddd3bd;
-
-  --text: #1b2440;
-  --text-dim: rgba(27,36,64,0.72);
-  --text-mute: rgba(27,36,64,0.55);
-
-  --line: rgba(181,145,31,0.28);
-  --line-soft: rgba(27,36,64,0.08);
-
-  --panel-bg: rgba(255,255,255,0.72);
-
-  --accent: #c89b1f;
-  --accent-2: #8b6a10;
-
-  --card-shadow: 0 10px 30px rgba(27,36,64,0.08);
-
-  --glass: rgba(255,255,255,0.55);
-
-  --panel-border: rgba(181,145,31,0.18);
+/* Prevent the particle canvas from stealing your clicks */
+#bg-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* 👈 THE CRITICAL FIX */
+    z-index: 0;          /* 👈 Keeps it behind everything */
 }
+
+/* Ensure your floating AI button sits cleanly on top of layers */
+.fab, #fab-ai {
+    z-index: 9999 !important;
+    position: fixed;
+}
+
 
 /* ───────────────────────── RESET ───────────────────────── */
 
