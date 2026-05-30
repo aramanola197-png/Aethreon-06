@@ -2,17 +2,27 @@
 
   <div class="auth-backdrop"></div>
 
-  <div class="auth-container">
+  <div class="auth-container gateway-container">
 
+    <!-- Logo centered at top -->
+    <div class="gateway-logo-wrap">
+      <img
+        src="/images/logo-brandname.jpg"
+        alt="AETHREON IQ"
+        class="gateway-logo"
+      />
+    </div>
+
+    <!-- Badge -->
+    <div class="gateway-badge">
+      WEB3 INTELLIGENCE LAYER
+    </div>
+
+    <!-- Headline -->
     <div class="gateway-brand">
-
-      <span class="gateway-badge">
-        WEB3 INTELLIGENCE LAYER
-      </span>
-
       <h1>
-        Reputation isn’t a number.
-        <span>It’s signal.</span>
+        Reputation isn't a number.
+        <span>It's signal.</span>
       </h1>
 
       <p>
@@ -22,34 +32,121 @@
       </p>
     </div>
 
+    <!-- CTA Buttons -->
     <div class="gateway-actions">
-
       <a href="/auth/signup" class="auth-primary-btn">
         Create Account
       </a>
-
       <a href="/auth/login" class="auth-secondary-btn">
         Login
       </a>
-
     </div>
 
+    <!-- Footer pills -->
     <div class="gateway-footer">
-
-      <div>
-        Wallet Intelligence
-      </div>
-
-      <div>
-        Reputation Analytics
-      </div>
-
-      <div>
-        Contributor Discovery
-      </div>
-
+      <div>Wallet Intelligence</div>
+      <div>Reputation Analytics</div>
+      <div>Contributor Discovery</div>
     </div>
 
   </div>
 
 </section>
+
+<style>
+  /* ── Gateway-specific overrides (scoped, won't affect other pages) ── */
+
+  .gateway-container {
+    text-align: center;
+    padding: 40px 36px 44px;
+    max-width: 560px;
+  }
+
+  /* Logo: centered, compact, fitted */
+  .gateway-logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .gateway-logo-wrap .gateway-logo {
+    width: clamp(64px, 14vw, 96px);
+    height: clamp(64px, 14vw, 96px);
+    object-fit: contain;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(201,168,97,0.18);
+    margin-bottom: 0;
+  }
+
+  /* Badge */
+  .gateway-container .gateway-badge {
+    margin: 0 auto 20px;
+  }
+
+  /* Headline */
+  .gateway-container .gateway-brand h1 {
+    font-size: clamp(26px, 6vw, 52px);
+    line-height: 1.1;
+    margin: 0 0 16px;
+    font-weight: 800;
+  }
+
+  /* Subtext */
+  .gateway-container .gateway-brand p {
+    font-size: clamp(13px, 3.5vw, 16px);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    color: rgba(255,255,255,0.72);
+  }
+
+  /* CTA buttons — centered */
+  .gateway-container .gateway-actions {
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+
+  .gateway-container .auth-primary-btn,
+  .gateway-container .auth-secondary-btn {
+    height: 52px;
+    padding: 0 28px;
+    font-size: clamp(13px, 3.5vw, 15px);
+    border-radius: 16px;
+    min-width: 130px;
+  }
+
+  /* Footer pills — centered */
+  .gateway-container .gateway-footer {
+    justify-content: center;
+    margin-top: 32px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .gateway-container .gateway-footer div {
+  font-size: clamp(11px, 2.8vw, 13px);
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.15) !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  color: #ffffff !important;
+}
+
+  /* ── Small phones (360px and below) ── */
+  @media (max-width: 380px) {
+    .gateway-container {
+      padding: 28px 18px 32px;
+    }
+
+    .gateway-container .gateway-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .gateway-container .auth-primary-btn,
+    .gateway-container .auth-secondary-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
