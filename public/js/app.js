@@ -54,9 +54,12 @@
   // ─── Panels (close on outside click) ─────────────────────────────────
   const panels = {
   'notif-panel': document.getElementById('notif-panel'),
+  'control-panel': document.getElementById('control-panel'),
+  'ai-terminal': document.getElementById('ai-terminal'),
 };
-  const openers = {
+const openers = {
   'notif-panel': document.getElementById('notif-btn'),
+  'control-panel': document.getElementById('control-btn'),
   'ai-terminal': document.getElementById('fab-ai'),
 };
   function openPanel(id) {
@@ -163,50 +166,6 @@ aiForm?.addEventListener('submit', async (e) => {
         appendAi('bot', '❌ Connection offline. Check backend status.');
     }
 }); // 👈 Properly closes your submit event listener block!
-
-// Put your UI initializations safely inside the DOMContentLoaded wrap
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. TOPBAR CONTROL PANEL TOGGLE
-    const controlBtn = document.getElementById('control-btn');
-    const controlPanel = document.getElementById('control-panel');
-    const closeControlBtn = document.querySelector('.close-control');
-
-    if (controlBtn && controlPanel) {
-        controlBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            controlPanel.classList.toggle('active');
-        });
-    }
-
-  // 2. FLOATING AI TERMINAL TOGGLE
-  const fabAi = document.getElementById('fab-ai');
-  const aiTerminal = document.getElementById('ai-terminal');
-
-  if (fabAi && aiTerminal) {
-    fabAi.addEventListener('click', (e) => {
-      e.stopPropagation();
-      aiTerminal.classList.toggle('open');
-    });
-  }
-
-  // 3. MOBILE-SAFE CLICK OUTSIDE TO CLOSE
-  document.addEventListener('click', (e) => {
-    // Close Control Panel if open and click falls outside
-    if (controlPanel && controlPanel.classList.contains('active')) {
-      if (!controlPanel.contains(e.target) && e.target !== controlBtn) {
-        controlPanel.classList.remove('active');
-      }
-    }
-
-    // Close AI Terminal if open and click falls outside
-    if (aiTerminal && aiTerminal.classList.contains('open')) {
-      if (!aiTerminal.contains(e.target) && !fabAi.contains(e.target)) {
-        aiTerminal.classList.remove('open');
-      }
-    }
-  });
-}); // This properly closes your DOMContentLoaded block!
-
   function appendAi(role, text) {
     if (!aiLog) return;
     const div = document.createElement('div');
