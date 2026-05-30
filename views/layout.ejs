@@ -109,45 +109,8 @@
   <!-- GLOBAL SCRIPT -->
     <script src="/js/app.js" defer></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // 1. CONTROL PANEL TOGGLE
-        const controlBtn = document.getElementById('control-btn') || document.querySelector('.ctrl-btn');
-        const controlPanel = document.getElementById('control-panel') || document.querySelector('.control-panel') || document.querySelector('.panel-right');
+    
 
-        if (controlBtn && controlPanel) {
-            controlBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                controlPanel.classList.toggle('active');
-            });
-        }
-
-        // 2. FLOATING AI BUTTON TOGGLE
-        const fabAi = document.getElementById('fab-ai') || document.querySelector('.fab');
-        const aiTerminal = document.getElementById('ai-terminal') || document.querySelector('.ai-terminal-container') || document.querySelector('.ai-terminal');
-
-        if (fabAi && aiTerminal) {
-            fabAi.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                aiTerminal.classList.toggle('open');
-            });
-        }
-
-                // 3. CLICK OUTSIDE TO CLOSE (Mobile-Resilient Version)
-        document.addEventListener('click', (e) => {
-            // If the panel is open, and the click was NOT inside the panel AND NOT inside the button
-            if (controlPanel && !controlPanel.contains(e.target) && !controlBtn.contains(e.target)) {
-                controlPanel.classList.remove('active');
-            }
-            // If the terminal is open, and the click was NOT inside the terminal AND NOT inside the FAB
-            if (aiTerminal && !aiTerminal.contains(e.target) && !fabAi.contains(e.target)) {
-                aiTerminal.classList.remove('open');
-            }
-        });
-    });
-  </script>
 
 </body>
 </html>
