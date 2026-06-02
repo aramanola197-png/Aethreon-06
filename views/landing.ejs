@@ -4,16 +4,16 @@
 
 <div style="width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0;">
   
-    <style>
-    /* 1. Expand the top nav space completely to the screen edges */
+      <style>
+    /* 1. Reset & Clean Padding Rules */
     header, .nav-container, [class*="nav"] { 
-      padding-left: 2rem !important; 
-      padding-right: 2rem !important;
+      padding-left: 1.5rem !important; 
+      padding-right: 1.5rem !important;
       width: 100% !important;
       box-sizing: border-box !important;
     }
 
-    /* 2. KILL THE DOT: Nuke the bullet point/dot leak next to your logo */
+    /* 2. KILL THE STRAY DOTS & LEAKING BULLETS */
     header ul, header li, li[class*="logo"], div[class*="logo"], [class*="brand"] {
       list-style: none !important;
       list-style-type: none !important;
@@ -26,13 +26,36 @@
       display: none !important;
     }
 
-    /* 3. FIX THE TEXT SPLIT: Lock "AETHREON IQ" on one single premium line */
-    header a, header div, span[class*="logo"], a[class*="logo"], [class*="brand"], .logo-text {
+    /* 3. NO-WRAP FOR BRAND NAME & TEXT ELEMENTS */
+    .logo-text, [class*="logo"] a, [class*="brand"] {
       white-space: nowrap !important;
-      display: inline-flex !important;
+    }
+
+    /* 4. PUSH LINKS AWAY FROM LOGO & FIX DESKTOP SPACE */
+    header, nav {
+      display: flex !important;
+      justify-content: space-between !important;
       align-items: center !important;
     }
+
+    /* 5. RESPONSIVE UTILITY: Hide hamburger on Desktop, hide Links on Mobile */
+    @media (min-width: 992px) {
+      /* Hide your hamburger element completely on big screens */
+      #lp-hamburger-btn, .hamburger, [id*="hamburger"] {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 991px) {
+      /* Hide regular text link strings on mobile screens so they don't overlap */
+      header nav a:not([id*="hamburger"]):not(.logo-text):not(.lp-btn), 
+      header ul, 
+      .nav-links {
+        display: none !important;
+      }
+    }
   </style>
+
 
   
     <meta charset="UTF-8">
@@ -458,19 +481,28 @@
         const lpDrawer = document.getElementById('lp-drawer');
 
         if (lpBtn && lpDrawer) {
-    lpBtn.addEventListener('click', (e) => {
+        lpBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       lpDrawer.classList.toggle('active');
 
-      // 🔥 PASTE THESE LINES RIGHT HERE (Beneath line 439) 👇
+      // Cleaned up behavior so your stylesheet handles the visibility smoothly:
       if (lpDrawer.classList.contains('active')) {
-          lpDrawer.style.width = "280px";
-          lpDrawer.style.left = "auto";
-          lpDrawer.style.right = "0";
-          lpDrawer.style.position = "fixed";
-      } else {
-          lpDrawer.style.width = "0px";
+          lpDrawer.style.display = "block"; 
       }
+
+      // Animates the hamburger lines into an 'X'
+      const lines = lpBtn.querySelectorAll('span');
+      if (lpDrawer.classList.contains('active')) {
+        lines[0].style.transform = 'rotate(45deg)';
+        lines[1].style.opacity = '0';
+        lines[2].style.transform = 'rotate(-45deg)';
+      } else {
+        lines[0].style.transform = 'none';
+        lines[1].style.opacity = '1';
+        lines[2].style.transform = 'none';
+      }
+    });
+
       // 🔥 PASTE END ☝️
                 
 
