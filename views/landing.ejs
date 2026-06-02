@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<div style="width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0;">
+  
+    <style>
+    /* 1. Expand the top nav space completely to the screen edges */
+    header, .nav-container, [class*="nav"] { 
+      padding-left: 2rem !important; 
+      padding-right: 2rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    /* 2. KILL THE DOT: Nuke the bullet point/dot leak next to your logo */
+    header ul, header li, li[class*="logo"], div[class*="logo"], [class*="brand"] {
+      list-style: none !important;
+      list-style-type: none !important;
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
+    
+    header li::before, [class*="logo"]::before {
+      content: none !important;
+      display: none !important;
+    }
+
+    /* 3. FIX THE TEXT SPLIT: Lock "AETHREON IQ" on one single premium line */
+    header a, header div, span[class*="logo"], a[class*="logo"], [class*="brand"], .logo-text {
+      white-space: nowrap !important;
+      display: inline-flex !important;
+      align-items: center !important;
+    }
+  </style>
+
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETHREON IQ — Advanced Web3 Intelligence Platform</title>
@@ -225,7 +259,7 @@
             <a href="#framework" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Framework</a>
             <a href="#metrics" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Metrics</a>
             <a href="#provenance" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Provenance</a>
-            <a href="/gateway" class="lp-btn lp-btn-secondary" style="padding: 8px 20px; font-size: 0.9rem;">Try Utility</a>
+            <a href="/auth/gateway" class="lp-btn lp-btn-secondary" style="padding: 8px 20px; font-size: 0.9rem;">Try Utility</a>
         </nav>
 
         <!-- Interactive Hamburger Trigger -->
@@ -243,7 +277,7 @@
         <a href="#framework" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// FRAMEWORK</a>
         <a href="#metrics" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// METRICS</a>
         <a href="#provenance" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// PROVENANCE</a>
-        <a href="/gateway" class="lp-btn lp-btn-primary" style="margin-top: 1rem; width: 60%; text-align: center;">Access Gateway Matrix</a>
+        <a href="auth/gateway" class="lp-btn lp-btn-primary" style="margin-top: 1rem; width: 60%; text-align: center;">Access Gateway Matrix</a>
     </div>
 
     <!-- Section 1: Split Screen Presentation Hero -->
@@ -257,7 +291,7 @@
                 An elite high-fidelity screening matrix engineered to analyze address structural composition, eliminate smart contract friction patterns, and safeguard network interaction channels.
             </p>
             <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                <a href="/gateway" class="lp-btn lp-btn-primary">Get Started Matrix</a>
+                <a href="/auth/gateway" class="lp-btn lp-btn-primary">Get Started Matrix</a>
                 <a href="#about" class="lp-btn lp-btn-secondary">Explore Architecture</a>
             </div>
         </div>
@@ -395,7 +429,7 @@
                     <h4 style="margin: 0; font-family: var(--mont); color: var(--accent-2);">Ready to test the interface?</h4>
                     <p class="lp-body-small" style="margin: 0.25rem 0 0 0;">Authenticate using your security credentials inside the main access port.</p>
                 </div>
-                <a href="/gateway" class="lp-btn lp-btn-primary">Try Active Utility</a>
+                <a href="/auth/gateway" class="lp-btn lp-btn-primary">Try Active Utility</a>
             </div>
         </div>
     </section>
@@ -424,21 +458,21 @@
         const lpDrawer = document.getElementById('lp-drawer');
 
         if (lpBtn && lpDrawer) {
-            lpBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                lpDrawer.classList.toggle('active');
+    lpBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      lpDrawer.classList.toggle('active');
+
+      // 🔥 PASTE THESE LINES RIGHT HERE (Beneath line 439) 👇
+      if (lpDrawer.classList.contains('active')) {
+          lpDrawer.style.width = "280px";
+          lpDrawer.style.left = "auto";
+          lpDrawer.style.right = "0";
+          lpDrawer.style.position = "fixed";
+      } else {
+          lpDrawer.style.width = "0px";
+      }
+      // 🔥 PASTE END ☝️
                 
-                const lines = lpBtn.querySelectorAll('span');
-                if (lpDrawer.classList.contains('active')) {
-                    lines[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
-                    lines[1].style.opacity = '0';
-                    lines[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
-                } else {
-                    lines[0].style.transform = 'none';
-                    lines[1].style.opacity = '1';
-                    lines[2].style.transform = 'none';
-                }
-            });
 
             // Auto-collapse layout menu drawer when a target section link is selected
             lpDrawer.querySelectorAll('a').forEach(targetLink => {
@@ -452,5 +486,6 @@
             });
         }
     </script>
+    </div>
 </body>
 </html>
