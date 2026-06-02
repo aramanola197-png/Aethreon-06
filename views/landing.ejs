@@ -4,53 +4,48 @@
 
 <div style="width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0;">
   
-      <style>
-    /* 1. Reset & Clean Padding Rules */
-    header, .nav-container, [class*="nav"] { 
-      padding-left: 1.5rem !important; 
-      padding-right: 1.5rem !important;
+        <style>
+    /* 1. Secure Layout Spacing */
+    header {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
       width: 100% !important;
+      padding: 1rem 2rem !important;
       box-sizing: border-box !important;
     }
 
-    /* 2. KILL THE STRAY DOTS & LEAKING BULLETS */
-    header ul, header li, li[class*="logo"], div[class*="logo"], [class*="brand"] {
+    /* 2. FORCE AETHREON IQ TO ONE LINE & CLEAN UP */
+    .logo-text, header a[href="/"], header .logo-container {
+      white-space: nowrap !important;
+      word-break: keep-all !important;
+      display: inline-block !important;
+    }
+
+    /* 3. WIPE THE STRAY LEAKING DOTS */
+    header ul, header li {
       list-style: none !important;
       list-style-type: none !important;
-      margin-left: 0 !important;
-      padding-left: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
-    
-    header li::before, [class*="logo"]::before {
+    header li::before {
       content: none !important;
       display: none !important;
     }
 
-    /* 3. NO-WRAP FOR BRAND NAME & TEXT ELEMENTS */
-    .logo-text, [class*="logo"] a, [class*="brand"] {
-      white-space: nowrap !important;
-    }
-
-    /* 4. PUSH LINKS AWAY FROM LOGO & FIX DESKTOP SPACE */
-    header, nav {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-    }
-
-    /* 5. RESPONSIVE UTILITY: Hide hamburger on Desktop, hide Links on Mobile */
+    /* 4. RESPONSIVE CONTROLS: Desktop vs Mobile */
     @media (min-width: 992px) {
-      /* Hide your hamburger element completely on big screens */
-      #lp-hamburger-btn, .hamburger, [id*="hamburger"] {
+      /* Hide hamburger button completely on desktop layouts */
+      #lp-hamburger-btn, .hamburger, [class*="hamburger"] {
         display: none !important;
       }
     }
 
     @media (max-width: 991px) {
-      /* Hide regular text link strings on mobile screens so they don't overlap */
-      header nav a:not([id*="hamburger"]):not(.logo-text):not(.lp-btn), 
-      header ul, 
-      .nav-links {
+      /* Hide standard horizontal links on mobile view text zones */
+      header nav a:not([id*="hamburger"]):not(.logo-text):not(.lp-btn),
+      header ul {
         display: none !important;
       }
     }
