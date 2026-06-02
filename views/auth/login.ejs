@@ -69,6 +69,65 @@
 
     </form>
 
+   <!-- APPEND THIS EXACT CODE TO THE BOTTOM OF YOUR LOGIN FORM CONTAINER BEFORE THE CLOSING </form> -->
+<style>
+    .iq-remember-wrapper {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        margin: 1.5rem 0;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 0.9rem;
+        color: #FFEDBD; /* Matches your --text token */
+    }
+    .iq-remember-wrapper input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+    .iq-box-checkmark {
+        height: 18px;
+        width: 18px;
+        background: rgba(25, 37, 71, 0.6);
+        border: 1px solid rgba(173, 132, 17, 0.4); /* Matches your --line token */
+        border-radius: 4px;
+        margin-right: 12px;
+        position: relative;
+        transition: all 0.2s ease;
+    }
+    .iq-remember-wrapper:hover input ~ .iq-box-checkmark {
+        border-color: #d4a531; /* Matches your --accent-2 token */
+    }
+    .iq-remember-wrapper input:checked ~ .iq-box-checkmark {
+        background: #AD8411; /* Matches your --accent token */
+        border-color: #d4a531;
+    }
+    .iq-box-checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 5px;
+        top: 2px;
+        width: 4px;
+        height: 8px;
+        border: solid #FFEDBD;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+    .iq-remember-wrapper input:checked ~ .iq-box-checkmark:after {
+        display: block;
+    }
+</style>
+
+<label class="iq-remember-wrapper">
+    <input type="checkbox" name="rememberMe" id="rememberMe">
+    <span class="iq-box-checkmark"></span>
+    Remember Me (Maintain Security Session)
+</label>
+
    
     <div class="auth-bottom-text">
 

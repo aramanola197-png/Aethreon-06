@@ -4,15 +4,21 @@ const router = express.Router();
 const { ensureAuth } = require('../middleware/authMiddleware');
 
 router.get('/', (req, res) => {
-  if (!req.user) {
-    return res.redirect('/auth/gateway');
+  // If they are already authenticated, send them straight to the inner platform home
+  if (req.user) {
+    return res.render('pages/home', {
+      title: 'AETHREON IQ',
+      pageTitle: 'Home'
+    });
   }
-
-  res.render('pages/home', {
-    title: 'AETHREON IQ',
-    pageTitle: 'Home'
+  
+  // Otherwise, render your brand new public landing page!
+  res.render('landing', {
+    title: 'AETHREON IQ — Advanced Intelligence Platform',
+    pageTitle: 'Welcome'
   });
 });
+
 
 const PAGES = [
   {

@@ -6,20 +6,18 @@ const User = require('../models/user');
 
 const router = express.Router();
 
+// 1. Keep gateway pointing to your sleek auth/login setup
 router.get('/gateway', (req, res) => {
   if (req.user) return res.redirect('/');
-  res.render('auth/gateway', {
+  res.render('auth/login', {
     title: 'Welcome • AETHREON IQ',
     pageTitle: 'gateway'
   });
 });
 
+// 2. Fallback: If someone manually visits /auth/login, route them to /gateway
 router.get('/login', (req, res) => {
-  if (req.user) return res.redirect('/');
-  res.render('auth/login', {
-    title: 'Login • AETHREON IQ',
-    pageTitle: 'login'
-  });
+  return res.redirect('/auth/gateway');
 });
 
 router.get('/signup', (req, res) => {
@@ -47,26 +45,26 @@ router.get('/google/callback',
 
 router.get('/logout', (req, res) => {
   req.logout(() => {
-    req.session?.destroy?.(() => {
+    if (req.session) {
+      req.session.destroy(() => {
+        res.redirect('/auth/gateway');
+      });
+    } else {
       res.redirect('/auth/gateway');
-    });
+    }
   });
 });
 
 router.post('/signup', async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.render('auth/signup', {
-        error: 'Account already exists'
-      });
+      return res.render('auth/signup', { error: 'Account already exists' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = await User.create({
       username,
       email,
@@ -74,10 +72,7 @@ router.post('/signup', async (req, res) => {
     });
 
     req.login(user, (err) => {
-      if (err) {
-        return res.redirect('/auth/login');
-      }
-
+      if (err) return res.redirect('/auth/login');
       return res.redirect('/');
     });
 
@@ -87,34 +82,32 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-
+// 3. Updated POST route with the "Remember Me" persistent cookie check
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body; // Added rememberMe extraction
 
     const user = await User.findOne({ email });
-
     if (!user) {
-      return res.render('auth/login', {
-        error: 'Account not found'
-      });
+      return res.render('auth/login', { error: 'Account not found' });
     }
 
-    const validPassword = await bcrypt.compare(
-      password,
-      user.password
-    );
-
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.render('auth/login', {
-        error: 'Invalid password'
-      });
+      return res.render('auth/login', { error: 'Invalid password' });
     }
 
     req.login(user, (err) => {
       if (err) {
-        return res.render('auth/login', {
-          error: 'Login failed'
+        return res.render('auth/login', { error: 'Login failed' });
+      }
+
+      // Drop cookie if checkbox was checked
+      if (rememberMe) {
+        res.cookie('aethreon_session_persistent', true, { 
+          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 Days expiration safety net
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production'
         });
       }
 
@@ -123,10 +116,7 @@ router.post('/login', async (req, res) => {
 
   } catch (err) {
     console.error(err);
-
-    return res.render('auth/login', {
-      error: 'Login failed'
-    });
+    return res.render('auth/login', { error: 'Login failed' });
   }
 });
 

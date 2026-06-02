@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHREON IQ — Advanced Web3 Intelligence Platform</title>
+    
+    <!-- Dynamic SVG Favicon Configuration (Keeps tabs clean and branded) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+
+    <!-- Global App Stylesheets Override Protection -->
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- Fonts requested by your design system -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Ubuntu+Mono&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ───────────────────────── AETHREON IQ DESIGN SYSTEM INTEGRATION ───────────────────────── */
+        :root {
+            --bg:        #192547;
+            --bg-2:      #1f2c54;
+            --bg-3:      #243365;
+            --particle:  #7BBDE8;
+
+            --text:      #FFEDBD;
+            --text-dim:  rgba(255,237,189,0.66);
+            --text-mute: rgba(255,237,189,0.4);
+
+            --accent:    #AD8411;
+            --accent-2:  #d4a531;
+
+            --line:      rgba(173,132,17,0.28);
+            --line-soft: rgba(255,237,189,0.08);
+
+            --panel-bg:  rgba(25,37,71,0.86);
+            --panel-blur: saturate(140%) blur(18px);
+
+            --shadow:    0 30px 80px -30px rgba(0,0,0,0.7);
+
+            --radius:    14px;
+            --radius-sm: 10px;
+
+            --geist:     'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --mont:      'Montserrat', system-ui, sans-serif;
+            --ubuntu:    'Ubuntu', system-ui, sans-serif;
+            --mono:      'Ubuntu Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+        }
+
+        /* Base Resets scoped strictly using specific body tag class to avoid bleeding */
+        body.aethreon-lp {
+            background-color: var(--bg) !important;
+            color: var(--text) !important;
+            font-family: var(--ubuntu);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Precise Text Layout Scales (No random text sizes) */
+        .lp-hero-title { font-family: var(--mont); font-size: 3.5rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--text); margin: 0; }
+        .lp-section-title { font-family: var(--mont); font-size: 2.5rem; font-weight: 700; line-height: 1.2; color: var(--text); margin: 0 0 1rem 0; letter-spacing: -0.01em; }
+        .lp-subsection-title { font-family: var(--mont); font-size: 1.75rem; font-weight: 700; line-height: 1.3; color: var(--accent-2); margin: 0 0 1rem 0; }
+        .lp-body-lead { font-size: 1.25rem; line-height: 1.6; color: var(--text-dim); }
+        .lp-body-normal { font-size: 1.05rem; line-height: 1.6; color: var(--text-dim); }
+        .lp-body-code { font-family: var(--mono); font-size: 0.95rem; color: var(--particle); }
+        .lp-body-small { font-size: 0.875rem; line-height: 1.5; color: var(--text-mute); }
+
+        /* Pure Glassmorphic Containers */
+        .lp-glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--panel-blur);
+            -webkit-backdrop-filter: var(--panel-blur);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .lp-glass-panel:hover {
+            border-color: var(--accent-2);
+            box-shadow: 0 0 25px rgba(212, 165, 49, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Structured Layout Configurations */
+        .lp-header {
+            height: 90px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8%;
+            border-bottom: 1px solid var(--line-soft);
+            position: sticky;
+            top: 0;
+            background: rgba(25, 37, 71, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .lp-split-hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            min-height: calc(100vh - 90px);
+            align-items: center;
+            padding: 0 8%;
+            gap: 4rem;
+            position: relative;
+        }
+
+        /* Vector Accent Graphic Placements instead of Emojis */
+        .lp-vector-accent {
+            width: 48px;
+            height: 4px;
+            background: var(--accent);
+            margin-bottom: 1.5rem;
+            border-radius: 2px;
+        }
+
+        /* Action Buttons */
+        .lp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-family: var(--mont);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .lp-btn-primary {
+            background: var(--accent);
+            color: var(--text);
+            border: 1px solid var(--accent-2);
+        }
+        .lp-btn-primary:hover {
+            background: var(--accent-2);
+            box-shadow: 0 0 15px rgba(212, 165, 49, 0.4);
+            transform: translateY(-2px);
+        }
+        .lp-btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line);
+        }
+        .lp-btn-secondary:hover {
+            background: rgba(255, 237, 189, 0.05);
+            border-color: var(--text-dim);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive System */
+        .lp-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .lp-hamburger span {
+            width: 30px;
+            height: 3px;
+            background-color: var(--text);
+            transition: 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .lp-mobile-drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .lp-mobile-drawer.active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            .lp-hero-title { font-size: 2.75rem; }
+            .lp-section-title { font-size: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .lp-split-hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 6% 4rem 6%;
+                text-align: center;
+            }
+            .lp-desktop-nav { display: none !important; }
+            .lp-hamburger { display: flex; }
+            .lp-hero-title { font-size: 2.3rem; }
+            .lp-panel-side-content { margin: 2rem auto 0 auto; max-width: 440px; }
+        }
+    </style>
+</head>
+<body class="aethreon-lp">
+
+    <!-- Header Navigation -->
+    <header class="lp-header">
+        <div style="display: flex; align-items: center; gap: 14px;">
+            <!-- Monochromatic Clean Code Emblem replacing Emoji -->
+            <div style="width: 12px; height: 12px; background: var(--accent-2); border-radius: 50%;"></div>
+            <span style="font-family: var(--mont); font-weight: 800; font-size: 1.4rem; letter-spacing: 1px;">
+                AETHREON <span style="color: var(--accent-2);">IQ</span>
+            </span>
+        </div>
+
+        <!-- Desktop Links Navigation -->
+        <nav class="lp-desktop-nav" style="display: flex; align-items: center; gap: 2.5rem;">
+            <a href="#about" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">About</a>
+            <a href="#vision" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Vision</a>
+            <a href="#framework" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Framework</a>
+            <a href="#metrics" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Metrics</a>
+            <a href="#provenance" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Provenance</a>
+            <a href="/gateway" class="lp-btn lp-btn-secondary" style="padding: 8px 20px; font-size: 0.9rem;">Try Utility</a>
+        </nav>
+
+        <!-- Interactive Hamburger Trigger -->
+        <div id="lp-hamburger-btn" class="lp-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Complete Mobile Menu Drawer Overlay (All Sub-sections Mapped Perfectly) -->
+    <div id="lp-drawer" class="lp-mobile-drawer">
+        <a href="#about" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// ABOUT</a>
+        <a href="#vision" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// VISION</a>
+        <a href="#framework" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// FRAMEWORK</a>
+        <a href="#metrics" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// METRICS</a>
+        <a href="#provenance" style="color: var(--text); font-family: var(--mont); font-size: 1.5rem; text-decoration: none; font-weight: 700;">// PROVENANCE</a>
+        <a href="/gateway" class="lp-btn lp-btn-primary" style="margin-top: 1rem; width: 60%; text-align: center;">Access Gateway Matrix</a>
+    </div>
+
+    <!-- Section 1: Split Screen Presentation Hero -->
+    <section class="lp-split-hero">
+        <div style="z-index: 10;">
+            <h1 class="lp-hero-title">
+                Intelligent Security <br>
+                <span style="color: var(--accent-2);">For Decentralized Foundations</span>
+            </h1>
+            <p class="lp-body-lead" style="margin: 1.5rem 0 2.5rem 0; max-width: 620px;">
+                An elite high-fidelity screening matrix engineered to analyze address structural composition, eliminate smart contract friction patterns, and safeguard network interaction channels.
+            </p>
+            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                <a href="/gateway" class="lp-btn lp-btn-primary">Get Started Matrix</a>
+                <a href="#about" class="lp-btn lp-btn-secondary">Explore Architecture</a>
+            </div>
+        </div>
+
+        <!-- Right Side: Branded Text Core Block (No Images) -->
+        <div class="lp-glass-panel lp-panel-side-content" style="padding: 2.5rem; border-left: 4px solid var(--accent);">
+            <div style="font-family: var(--mono); color: var(--particle); font-size: 0.8rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">
+                // STATE MACHINE ENGINE STATUS: ACTIVE
+            </div>
+            <h3 style="font-family: var(--mont); margin: 0 0 1rem 0; font-size: 1.3rem; color: var(--text);">
+                Zero-Variance Normalization
+            </h3>
+            <p class="lp-body-normal" style="font-size: 0.95rem; margin-bottom: 1.5rem;">
+                The validation engine processes incoming ledger rules continuously, ensuring input syntax is completely accurate prior to persistent database layer serialization.
+            </p>
+            <div style="background: var(--bg-3); padding: 12px 18px; border-radius: var(--radius-sm); border: 1px solid var(--line-soft);">
+                <span class="lp-body-code">> System Ready: Stacks Address Verification Matrix Extended</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Deep Technical Analytics (About) -->
+    <section id="about" style="padding: 7rem 8%; background: var(--bg-2); border-top: 1px solid var(--line-soft);">
+        <div style="max-width: 850px; margin: 0 auto; text-align: center; margin-bottom: 5.5rem;">
+            <div class="lp-vector-accent" style="margin: 0 auto 1.5rem auto;"></div>
+            <h2 class="lp-section-title">The Analytical Architecture</h2>
+            <p class="lp-body-normal" style="font-size: 1.2rem; color: var(--text-dim);">
+                Web3 ecosystems are fundamentally vulnerable to parsing failures, unverified contract entry keys, and invalid signature structures. Aethreon IQ introduces systemic structural screening to identify anomalies instantly.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem;">
+            <div class="lp-glass-panel" style="padding: 2.5rem;">
+                <div style="font-family: var(--mono); color: var(--accent-2); margin-bottom: 0.5rem; font-size: 0.85rem;">[METRIC_INTEGRITY]</div>
+                <h3 class="lp-subsection-title">Friction Reduction</h3>
+                <p class="lp-body-normal">
+                    We eliminate input failures by systematically evaluating runtime strings against cryptographic patterns. Data enters clean, eliminating unexpected errors from your live workflow.
+                </p>
+            </div>
+            <div class="lp-glass-panel" style="padding: 2.5rem;">
+                <div style="font-family: var(--mono); color: var(--accent-2); margin-bottom: 0.5rem; font-size: 0.85rem;">[STX_COMPLIANCE]</div>
+                <h3 class="lp-subsection-title">Why It's Needed</h3>
+                <p class="lp-body-normal">
+                    Traditional address interfaces reject variant network prefixes or crash on complex smart contract identifiers. Aethreon normalizes transaction pathways to handle complex inputs reliably.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: The Founders & Genesis (Zero Authority DAO) -->
+    <section id="vision" style="padding: 7rem 8%; position: relative;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
+            <div>
+                <div class="lp-vector-accent"></div>
+                <h2 class="lp-section-title">Engineered by Zero Authority DAO</h2>
+                <p class="lp-body-normal" style="margin-bottom: 1.5rem;">
+                    Rooted entirely in the sovereign primitives of decentralized software mechanics, Zero Authority DAO designs systems that replace blind dependency with direct program verification.
+                </p>
+                <p class="lp-body-normal">
+                    Aethreon IQ represents our primary intelligence component, ensuring application suites scale perfectly while keeping calculation readouts strictly tied to the ledger state.
+                </p>
+            </div>
+            <div class="lp-glass-panel" style="padding: 3rem; background: linear-gradient(145deg, var(--bg-2) 0%, var(--bg) 100%);">
+                <div style="font-family: var(--mono); color: var(--accent-2); margin-bottom: 1rem;">// CORE MANIFESTO</div>
+                <blockquote style="margin: 0; padding: 0; font-style: italic;" class="lp-body-lead">
+                    "We do not build to request permission, nor do we deploy to inherit authority. Software must justify its own security parameters programmatically through zero-variance logic."
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Deep Framework Core Metric Specs -->
+    <section id="framework" style="padding: 7rem 8%; background: var(--bg-2); border-top: 1px solid var(--line-soft);">
+        <div style="text-align: center; margin-bottom: 5rem;">
+            <div class="lp-vector-accent" style="margin: 0 auto 1.5rem auto;"></div>
+            <h2 class="lp-section-title">Algorithmic Precision Matrix</h2>
+            <p class="lp-body-normal" style="max-width: 700px; margin: 0 auto;">
+                A precise matrix checking layout parameters, address logic variations, and structural validation workflows.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div style="border: 1px solid var(--line); padding: 2rem; border-radius: var(--radius); background: var(--bg);">
+                <div class="lp-body-code" style="margin-bottom: 0.5rem;">[RULE_01]</div>
+                <h4 style="margin: 0 0 0.5rem 0; font-family: var(--mont); color: var(--text);">Complete Base58 Parsing</h4>
+                <p class="lp-body-small">Deep evaluation across core cryptographic alpha-ranges to ensure address integrity.</p>
+            </div>
+            <div style="border: 1px solid var(--line); padding: 2rem; border-radius: var(--radius); background: var(--bg);">
+                <div class="lp-body-code" style="margin-bottom: 0.5rem;">[RULE_02]</div>
+                <h4 style="margin: 0 0 0.5rem 0; font-family: var(--mont); color: var(--text);">Contract Sub-Path Isolation</h4>
+                <p class="lp-body-small">Separates complex contract identifiers cleanly to prevent runtime lookup failure anomalies.</p>
+            </div>
+            <div style="border: 1px solid var(--line); padding: 2rem; border-radius: var(--radius); background: var(--bg);">
+                <div class="lp-body-code" style="margin-bottom: 0.5rem;">[RULE_03]</div>
+                <h4 style="margin: 0 0 0.5rem 0; font-family: var(--mont); color: var(--text);">Strict Response Sync</h4>
+                <p class="lp-body-small"> Guarantees real-time accuracy checks across processing layers with zero output variance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Real-Time Performance Statistics -->
+    <section id="metrics" style="padding: 7rem 8%; border-top: 1px solid var(--line-soft);">
+        <div style="text-align: center; margin-bottom: 5rem;">
+            <div class="lp-vector-accent" style="margin: 0 auto 1.5rem auto;"></div>
+            <h2 class="lp-section-title">System Metrics & Performance</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; text-align: center;">
+            <div class="lp-glass-panel" style="padding: 2.5rem;">
+                <div style="font-family: var(--mont); font-size: 3rem; font-weight: 800; color: var(--accent-2); margin-bottom: 0.5rem;">0.00%</div>
+                <div class="lp-body-code">// FRICTION ENCOUNTERED</div>
+            </div>
+            <div class="lp-glass-panel" style="padding: 2.5rem;">
+                <div style="font-family: var(--mont); font-size: 3rem; font-weight: 800; color: var(--particle); margin-bottom: 0.5rem;">100%</div>
+                <div class="lp-body-code">// COMPLIANCE DEPTH</div>
+            </div>
+            <div class="lp-glass-panel" style="padding: 2.5rem;">
+                <div style="font-family: var(--mont); font-size: 3rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem;">&lt;10ms</div>
+                <div class="lp-body-code">// COMPUTE OVERHEAD</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: The Provenance Roadmap Block -->
+    <section id="provenance" style="padding: 7rem 8%; background: var(--bg-2); border-top: 1px solid var(--line-soft);">
+        <div style="max-width: 800px; margin: 0 auto;" class="lp-glass-panel">
+            <div style="padding: 3rem; border-bottom: 1px solid var(--line-soft);">
+                <div class="lp-vector-accent"></div>
+                <h2 class="lp-section-title" style="margin: 0;">System Provenance & Pipeline</h2>
+                <p class="lp-body-normal" style="margin: 1rem 0 0 0;">
+                    We are currently in the final operational phase of deployment optimization. This environment scales out verification performance metrics to keep data structures fully integrated.
+                </p>
+            </div>
+            <div style="padding: 3rem; background: rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                <div>
+                    <h4 style="margin: 0; font-family: var(--mont); color: var(--accent-2);">Ready to test the interface?</h4>
+                    <p class="lp-body-small" style="margin: 0.25rem 0 0 0;">Authenticate using your security credentials inside the main access port.</p>
+                </div>
+                <a href="/gateway" class="lp-btn lp-btn-primary">Try Active Utility</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Footer Area -->
+    <footer style="padding: 4rem 8%; border-top: 1px solid var(--line); background: #131d3a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+        <div>
+            <div style="font-family: var(--mont); font-weight: 800; font-size: 1.1rem; letter-spacing: 1px;">
+                AETHREON <span style="color: var(--accent-2);">IQ</span>
+            </div>
+            <p class="lp-body-small" style="margin: 0.5rem 0 0 0;">
+                High-Fidelity Screening Framework // Powered by Zero Authority DAO.
+            </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 2.5rem;">
+            <a href="https://x.com/aethreoniq" target="_blank" rel="noopener noreferrer" style="font-family: var(--mono); color: var(--particle); text-decoration: none; font-weight: 700; font-size: 1rem;">
+                x.com/aethreoniq
+            </a>
+            <span class="lp-body-small">&copy; 2026 Zero Authority DAO.</span>
+        </div>
+    </footer>
+
+    <!-- Interactive Navigation Drawer Script -->
+    <script>
+        const lpBtn = document.getElementById('lp-hamburger-btn');
+        const lpDrawer = document.getElementById('lp-drawer');
+
+        if (lpBtn && lpDrawer) {
+            lpBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                lpDrawer.classList.toggle('active');
+                
+                const lines = lpBtn.querySelectorAll('span');
+                if (lpDrawer.classList.contains('active')) {
+                    lines[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                    lines[1].style.opacity = '0';
+                    lines[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                } else {
+                    lines[0].style.transform = 'none';
+                    lines[1].style.opacity = '1';
+                    lines[2].style.transform = 'none';
+                }
+            });
+
+            // Auto-collapse layout menu drawer when a target section link is selected
+            lpDrawer.querySelectorAll('a').forEach(targetLink => {
+                targetLink.addEventListener('click', () => {
+                    lpDrawer.classList.remove('active');
+                    const lines = lpBtn.querySelectorAll('span');
+                    lines[0].style.transform = 'none';
+                    lines[1].style.opacity = '1';
+                    lines[2].style.transform = 'none';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

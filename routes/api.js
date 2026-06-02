@@ -9,6 +9,7 @@ const Notification = require('../models/Notification');
 const router = express.Router();
 
 const dbReady = () => mongoose.connection.readyState === 1;
+
 const clientId = (req) => {
   const id = req.get('x-client-id') || req.body?.clientId || req.query?.clientId;
   if (!id || typeof id !== 'string' || id.length > 64) {
@@ -16,12 +17,34 @@ const clientId = (req) => {
   }
   return id;
 };
-const isStxAddress = (s) => typeof s === 'string' && /^S[A-Z0-9]{20,60}$/.test(s.trim());
+
+// Pulling in your secure Stacks validator module
+const { validateStacksAddress } = require('../utils/stxValidator');
+
+// ───── Verification Route ─────
+router.post('/verify', async (req, res) => {
+    const targetAddress = req.body.address;
+
+    if (!validateStacksAddress(targetAddress)) {
+        // Blocks syntax failures cleanly before it hits your validation engines
+        return res.status(400).json({ 
+            success: false, 
+            error: "Invalid Stacks address configuration." 
+        });
+    }
+
+    // Your existing database or security checking logic continues normally below...
+});
 
 // ───── Wallet intelligence ─────
 router.get('/wallet/:address', async (req, res) => {
   const address = String(req.params.address || '').trim();
-  if (!isStxAddress(address)) return res.status(400).json({ ok: false, message: 'Invalid STX address format' });
+  
+  // Upgraded verification rule check
+  if (!validateStacksAddress(address)) {
+    return res.status(400).json({ ok: false, message: 'Invalid STX address format' });
+  }
+  
   const result = await zad.getUser(address);
   if (!result.ok) return res.status(result.status || 502).json({ ok: false, message: result.message });
   const profile = rep.buildProfile(result.data?.user || result.data);
@@ -31,7 +54,12 @@ router.get('/wallet/:address', async (req, res) => {
 // ───── Reputation (same engine, exposed separately for clarity) ─────
 router.get('/reputation/:address', async (req, res) => {
   const address = String(req.params.address || '').trim();
-  if (!isStxAddress(address)) return res.status(400).json({ ok: false, message: 'Invalid STX address format' });
+  
+  // Upgraded verification rule check
+  if (!validateStacksAddress(address)) {
+    return res.status(400).json({ ok: false, message: 'Invalid STX address format' });
+  }
+  
   const result = await zad.getUser(address);
   if (!result.ok) return res.status(result.status || 502).json({ ok: false, message: result.message });
   const profile = rep.buildProfile(result.data?.user || result.data);
@@ -42,7 +70,12 @@ router.get('/reputation/:address', async (req, res) => {
 router.get('/compare', async (req, res) => {
   const a = String(req.query.a || '').trim();
   const b = String(req.query.b || '').trim();
-  if (!isStxAddress(a) || !isStxAddress(b)) return res.status(400).json({ ok: false, message: 'Both addresses must be valid STX format' });
+  
+  // Cross-verifying both addresses under the new validator architecture
+  if (!validateStacksAddress(a) || !validateStacksAddress(b)) {
+    return res.status(400).json({ ok: false, message: 'Both addresses must be valid STX format' });
+  }
+  
   const [ra, rb] = await Promise.all([zad.getUser(a), zad.getUser(b)]);
   if (!ra.ok || !rb.ok) return res.status(502).json({ ok: false, message: ra.message || rb.message });
   res.json({
@@ -79,7 +112,6 @@ router.get('/analytics', async (req, res) => {
   const [platform, users, gigs, quests, sips] = await Promise.all([
     zad.platformStats(), zad.userStats(), zad.gigStats(), zad.questStats(), zad.sipStats(),
   ]);
-  // ZAD API responses are inconsistently wrapped — unwrap safely
   const unwrap = (r) => {
     if (!r.ok || !r.data) return null;
     return r.data.data || r.data;
