@@ -251,35 +251,72 @@
             .lp-hero-title { font-size: 2.3rem; }
             .lp-panel-side-content { margin: 2rem auto 0 auto; max-width: 440px; }
         }
+        
+                /* ... keeping all your previous CSS styles exactly as they are ... */
+
+        @media (max-width: 768px) {
+            .lp-split-hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 6% 4rem 6%;
+                text-align: center;
+            }
+            .lp-desktop-nav { display: none !important; }
+            .lp-hamburger { display: flex; }
+            .lp-hero-title { font-size: 2.3rem; }
+            .lp-panel-side-content { margin: 2rem auto 0 auto; max-width: 440px; }
+        }
+
+        /* 🔽 PASTE THE NEW RESPONSIVE OVERRIDES HERE RIGHT BEFORE THE STYLE BLOCK CLOSES 🔽 */
+        @media (min-width: 992px) {
+            .mobile-only-hamburger { 
+                display: none !important; 
+            }
+            .desktop-only-links { 
+                display: flex !important; 
+            }
+        }
+
+        @media (max-width: 991px) {
+            .desktop-only-links { 
+                display: none !important; 
+            }
+            .mobile-only-hamburger { 
+                display: flex !important; 
+            }
+        }
+    
     </style>
+
 </head>
 <body class="aethreon-lp">
 
     <div style="width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0;">
 
-        <header class="lp-header">
-            <div class="brand-container">
-                <div style="width: 10px; height: 10px; background: var(--accent-2); border-radius: 50%; flex-shrink: 0;"></div>
-                <span class="logo-text">
-                    AETHREON <span style="color: var(--accent-2);">IQ</span>
-                </span>
-            </div>
+        <header class="lp-header" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; padding: 0 5% !important;">
+    
+    <div class="brand-container" style="display: flex !important; align-items: center !important; gap: 10px !important;">
+        <div style="width: 10px; height: 10px; background: var(--accent-2); border-radius: 50%; flex-shrink: 0;"></div>
+        <span class="logo-text" style="white-space: nowrap !important;">
+            AETHREON <span style="color: var(--accent-2);">IQ</span>
+        </span>
+    </div>
 
-            <nav class="lp-desktop-nav" style="display: flex; align-items: center; gap: 2.5rem;">
-                <a href="#about" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">About</a>
-                <a href="#vision" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Vision</a>
-                <a href="#framework" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Framework</a>
-                <a href="#metrics" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Metrics</a>
-                <a href="#provenance" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Provenance</a>
-                <a href="/auth/gateway" class="lp-btn lp-btn-secondary" style="padding: 8px 20px; font-size: 0.9rem;">Try Utility</a>
-            </nav>
+    <nav class="lp-desktop-nav desktop-only-links" style="display: flex !important; align-items: center !important; gap: 2rem !important; margin-left: auto !important;">
+        <a href="#about" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">About</a>
+        <a href="#vision" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Vision</a>
+        <a href="#framework" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Framework</a>
+        <a href="#metrics" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Metrics</a>
+        <a href="#provenance" style="color: var(--text-dim); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Provenance</a>
+        <a href="/auth/gateway" class="lp-btn lp-btn-secondary" style="padding: 8px 20px; font-size: 0.9rem; white-space: nowrap !important;">Try Utility</a>
+    </nav>
 
-            <div id="lp-hamburger-btn" class="lp-hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </header>
+    <div id="lp-hamburger-btn" class="lp-hamburger mobile-only-hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+
 
         <div id="lp-drawer" class="lp-mobile-drawer">
             <a href="#about" style="color: var(--text); font-family: var(--mont); font-size: 1.25rem; text-decoration: none; font-weight: 700;">// ABOUT</a>
