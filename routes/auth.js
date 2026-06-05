@@ -44,15 +44,15 @@ router.get('/google/callback',
 );
 
 router.get('/logout', (req, res) => {
-  req.logout(() => {
-    if (req.session) {
-      req.session.destroy(() => {
-        res.redirect('/auth/gateway');
-      });
-    } else {
-      res.redirect('/auth/gateway');
-    }
-  });
+    req.logout(() => {
+        if (req.session) {
+            req.session.destroy(() => {
+                res.redirect('/'); // 🔥 Changed from '/auth/gateway' to '/'
+            });
+        } else {
+            res.redirect('/'); // 🔥 Changed from '/auth/gateway' to '/'
+        }
+    });
 });
 
 router.post('/signup', async (req, res) => {
